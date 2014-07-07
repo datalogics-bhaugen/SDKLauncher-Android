@@ -42,7 +42,9 @@ import android.widget.Toast;
 import org.readium.sdk.android.Container;
 import org.readium.sdk.android.Package;
 import org.readium.sdk.android.SpineItem;
-import org.readium.sdk.android.launcher.model.OpenPageRequest;
+import org.readium.sdk.jni.Constants;
+import org.readium.sdk.jni.OpenPageRequest;
+import org.readium.sdk.jni.WebViewActivity;
 
 public class SpineItemsActivity extends Activity {
 

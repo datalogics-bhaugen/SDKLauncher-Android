@@ -42,7 +42,9 @@ import android.widget.ListView;
 import org.readium.sdk.android.Container;
 import org.readium.sdk.android.launcher.model.Bookmark;
 import org.readium.sdk.android.launcher.model.BookmarkDatabase;
-import org.readium.sdk.android.launcher.model.OpenPageRequest;
+import org.readium.sdk.jni.Constants;
+import org.readium.sdk.jni.OpenPageRequest;
+import org.readium.sdk.jni.WebViewActivity;
 
 public class BookmarksActivity extends Activity {
 	

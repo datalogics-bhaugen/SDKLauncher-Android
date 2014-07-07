@@ -79,7 +79,7 @@
             android:parentActivityName=".BookDataActivity">
         </activity>
         <activity
-            android:name=".WebViewActivity"
+            android:name="org.readium.sdk.jni.WebViewActivity"
             android:label="@string/app_name" 
             android:configChanges="orientation|screenSize">
         </activity>

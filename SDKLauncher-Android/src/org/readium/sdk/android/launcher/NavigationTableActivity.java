@@ -44,7 +44,9 @@ import org.readium.sdk.android.Package;
 import org.readium.sdk.android.components.navigation.NavigationElement;
 import org.readium.sdk.android.components.navigation.NavigationPoint;
 import org.readium.sdk.android.components.navigation.NavigationTable;
-import org.readium.sdk.android.launcher.model.OpenPageRequest;
+import org.readium.sdk.jni.Constants;
+import org.readium.sdk.jni.OpenPageRequest;
+import org.readium.sdk.jni.WebViewActivity;
 
 public abstract class NavigationTableActivity extends Activity {
 	

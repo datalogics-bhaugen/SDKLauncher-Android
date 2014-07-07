@@ -32,6 +32,7 @@ import android.widget.TextView;
 
 import org.readium.sdk.android.Container;
 import org.readium.sdk.android.Package;
+import org.readium.sdk.jni.Constants;
 
 public class MetaDataActivity extends Activity {
 

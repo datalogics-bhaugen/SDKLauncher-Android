@@ -4,6 +4,7 @@
  *
  * Created by Yonathan Teitelbaum (Mantano) on 2013-07-30.
  * Copyright (c) 2012-2013 The Readium Foundation and contributors.
+ * 
  */
 
 //  Copyright (c) 2014 Readium Foundation and/or its licensees. All rights reserved.
@@ -29,58 +30,42 @@
 //  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
 //  OF THE POSSIBILITY OF SUCH DAMAGE
 
-package org.readium.sdk.android.launcher.model;
+package org.readium.sdk.jni;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-public class PaginationInfo {
-
-	private final String pageProgressionDirection;
-	private final boolean isFixedLayout;
-	private final int spineItemCount;
-	private final List<Page> openPages;
+public class Page {
+	private final int mSpineItemPageIndex;
+	private final int mSpineItemPageCount;
+	private final String mIdref;
+	private final int mSpineItemIndex;
 	
-	public PaginationInfo(String pageProgressionDirection,
-			boolean isFixedLayout, int spineItemCount) {
-		this.pageProgressionDirection = pageProgressionDirection;
-		this.isFixedLayout = isFixedLayout;
-		this.spineItemCount = spineItemCount;
-		this.openPages = new ArrayList<Page>();
+	public Page(int spineItemPageIndex, int spineItemPageCount,
+			String idref, int spineItemIndex) {
+		mSpineItemPageIndex = spineItemPageIndex;
+		mSpineItemPageCount = spineItemPageCount;
+		mIdref = idref;
+		mSpineItemIndex = spineItemIndex;
 	}
 
-	public String getPageProgressionDirection() {
-		return pageProgressionDirection;
+	public int getSpineItemPageIndex() {
+		return mSpineItemPageIndex;
 	}
 
-	public boolean isFixedLayout() {
-		return isFixedLayout;
+	public int getSpineItemPageCount() {
+		return mSpineItemPageCount;
 	}
 
-	public int getSpineItemCount() {
-		return spineItemCount;
+	public String getIdref() {
+		return mIdref;
 	}
 
-	public List<Page> getOpenPages() {
-		return openPages;
+	public int getSpineItemIndex() {
+		return mSpineItemIndex;
 	}
-	
-	public static PaginationInfo fromJson(String jsonString) throws JSONException {
-		JSONObject json = new JSONObject(jsonString);
-		PaginationInfo paginationInfo = new PaginationInfo(json.optString("pageProgressionDirection", "ltr"), 
-				json.optBoolean("isFixedLayout"), 
-				json.optInt("spineItemCount"));
-		JSONArray openPages = json.getJSONArray("openPages");
-		for (int i = 0; i < openPages.length(); i++) {
-			JSONObject p = openPages.getJSONObject(i);
-			Page page = new Page(p.optInt("spineItemPageIndex"), p.optInt("spineItemPageCount"),
-					p.optString("idref"), p.optInt("spineItemIndex"));
-			paginationInfo.openPages.add(page);
-		}
-		return paginationInfo;
+
+	@Override
+	public String toString() {
+		return "Page [spineItemPageIndex=" + mSpineItemPageIndex
+				+ ", spineItemPageCount=" + mSpineItemPageCount + ", idref="
+				+ mIdref + ", spineItemIndex=" + mSpineItemIndex + "]";
 	}
 }

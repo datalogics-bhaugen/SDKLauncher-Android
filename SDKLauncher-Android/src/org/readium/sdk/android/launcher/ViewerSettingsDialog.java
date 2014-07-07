@@ -29,7 +29,8 @@
 
 package org.readium.sdk.android.launcher;
 
-import org.readium.sdk.android.launcher.model.ViewerSettings;
+import org.readium.sdk.jni.OnViewerSettingsChange;
+import org.readium.sdk.jni.ViewerSettings;
 
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
@@ -48,13 +49,6 @@ import android.widget.EditText;
  */
 public class ViewerSettingsDialog extends DialogFragment {
 	
-	/**
-	 * Interface to notify the listener when a viewer settings have been changed.
-	 */
-	public interface OnViewerSettingsChange {
-		public void onViewerSettingsChange(ViewerSettings settings);
-	}
-
 	protected static final String TAG = "ViewerSettingsDialog";
 	
 	private OnViewerSettingsChange mListener;

@@ -21,49 +21,11 @@
 //  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
 //  OF THE POSSIBILITY OF SUCH DAMAGE
 
-package org.readium.sdk.android.launcher.model;
+package org.readium.sdk.jni;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+public class Constants {
 
-public class ViewerSettings {
-
-    private final boolean mIsSyntheticSpread;
-    private final int mFontSize;
-    private final int mColumnGap;
-    
-	public ViewerSettings(boolean isSyntheticSpread, int fontSize, int columnGap) {
-		mIsSyntheticSpread = isSyntheticSpread;
-		mFontSize = fontSize;
-		mColumnGap = columnGap;
-	}
-
-	public boolean isSyntheticSpread() {
-		return mIsSyntheticSpread;
-	}
-
-	public int getFontSize() {
-		return mFontSize;
-	}
-
-	public int getColumnGap() {
-		return mColumnGap;
-	}
-	
-	public JSONObject toJSON() throws JSONException {
-		JSONObject json = new JSONObject();
-		json.put("isSyntheticSpread", mIsSyntheticSpread);
-		json.put("fontSize", mFontSize);
-		json.put("columnGap", mColumnGap);
-		return json;
-	}
-
-	@Override
-	public String toString() {
-		return "ViewerSettings [isSyntheticSpread=" + mIsSyntheticSpread
-				+ ", fontSize=" + mFontSize + ", columnGap=" + mColumnGap
-				+ "]";
-	}
-	
-	
+	public static final String CONTAINER_ID = "container_id";
+	public static final String OPEN_PAGE_REQUEST_DATA = "openPageRequestData";
+	public static final String BOOK_NAME = "bookname";
 }

@@ -28,6 +28,7 @@ import java.util.Arrays;
 import org.readium.sdk.android.Container;
 import org.readium.sdk.android.EPub3;
 import org.readium.sdk.android.launcher.model.BookmarkDatabase;
+import org.readium.sdk.jni.Constants;
 
 import android.app.Activity;
 import android.content.Context;

@@ -27,7 +27,7 @@
 //  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
 //  OF THE POSSIBILITY OF SUCH DAMAGE
 
-package org.readium.sdk.android.launcher;
+package org.readium.sdk.jni;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -40,15 +40,10 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.readium.sdk.android.Container;
+import org.readium.sdk.android.EPub3;
 import org.readium.sdk.android.ManifestItem;
 import org.readium.sdk.android.Package;
 import org.readium.sdk.android.SpineItem;
-import org.readium.sdk.android.launcher.model.BookmarkDatabase;
-import org.readium.sdk.android.launcher.model.OpenPageRequest;
-import org.readium.sdk.android.launcher.model.Page;
-import org.readium.sdk.android.launcher.model.PaginationInfo;
-import org.readium.sdk.android.launcher.model.ReadiumJSApi;
-import org.readium.sdk.android.launcher.model.ViewerSettings;
 import org.readium.sdk.android.launcher.util.EpubServer;
 import org.readium.sdk.android.launcher.util.HTMLUtil;
 
@@ -81,11 +76,12 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-public class WebViewActivity extends FragmentActivity implements ViewerSettingsDialog.OnViewerSettingsChange {
+public class WebViewActivity extends FragmentActivity implements OnViewerSettingsChange {
 
 	private static final String TAG = "WebViewActivity";
 	private static final String ASSET_PREFIX = "file:///android_asset/readium-shared-js/";
 	private static final String READER_SKELETON = "file:///android_asset/readium-shared-js/reader.html";
+	private static final String FILENAME = "filename";
 	
 	private WebView mWebview;
 	private Container mContainer;
@@ -112,7 +108,7 @@ public class WebViewActivity extends FragmentActivity implements ViewerSettingsD
         if (intent.getFlags() == Intent.FLAG_ACTIVITY_NEW_TASK) {
             Bundle extras = intent.getExtras();
             if (extras != null) {
-                mContainer = ContainerHolder.getInstance().get(extras.getLong(Constants.CONTAINER_ID));
+                mContainer = EPub3.openBook(intent.getExtras().getString(FILENAME));
                 if (mContainer == null) {
                 	finish();
                 	return;
@@ -189,28 +185,25 @@ public class WebViewActivity extends FragmentActivity implements ViewerSettingsD
 
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 	    int itemId = item.getItemId();
-	    switch (itemId) {
-	    case R.id.add_bookmark:
+	    
+	    if (itemId == R.id.add_bookmark) {
 			Log.d(TAG, "Add a bookmark");
 			mReadiumJSApi.bookmarkCurrentPage();
 			return true;
-	    case R.id.settings:
-			Log.d(TAG, "Show settings");
-			showSettings();
-			return true;
-	    case R.id.mo_previous:
+	    } else if (itemId == R.id.mo_previous) {
 	    	mReadiumJSApi.previousMediaOverlay();
 	    	return true;
-		case R.id.mo_play:
+	    } else if (itemId == R.id.mo_play) {
 			mReadiumJSApi.toggleMediaOverlay();
 			return true;
-		case R.id.mo_pause:
+	    } else if (itemId == R.id.mo_pause) {
 			mReadiumJSApi.toggleMediaOverlay();
 			return true;
-		case R.id.mo_next:
+	    } else if (itemId == R.id.mo_next) {
 			mReadiumJSApi.nextMediaOverlay();
 			return true;
 	    }
+
 	    return false;
 	}
 
@@ -220,14 +213,6 @@ public class WebViewActivity extends FragmentActivity implements ViewerSettingsD
 		} else if (v.getId() == R.id.right) {
 			mReadiumJSApi.openPageRight();
 		}
-	}
-	
-	private void showSettings() {
-		FragmentManager fm = getSupportFragmentManager();
-		FragmentTransaction fragmentTransaction = fm.beginTransaction();
-		DialogFragment dialog = new ViewerSettingsDialog(this, mViewerSettings);
-        dialog.show(fm, "dialog");
-		fragmentTransaction.commit();
 	}
 
 	@Override
@@ -498,8 +483,6 @@ public class WebViewActivity extends FragmentActivity implements ViewerSettingsD
 						String title = editText.getText().toString();
 						try {
 							JSONObject bookmarkJson = new JSONObject(bookmarkData);
-							BookmarkDatabase.getInstance().addBookmark(mContainer.getName(), title,
-									bookmarkJson.getString("idref"), bookmarkJson.getString("contentCFI"));
 						} catch (JSONException e) {
 							Log.e(TAG, ""+e.getMessage(), e);
 						}
